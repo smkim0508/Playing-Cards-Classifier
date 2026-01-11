@@ -1,0 +1,2 @@
+For image classification practice with PyTorch, I'll be using the Playing Cards Dataset from Kaggle: https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data.
+- This data is downloaded using the Kaggle API, please see example in `exploration.py` for further reference.

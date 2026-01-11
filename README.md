@@ -11,3 +11,8 @@ PyTorch usage can be mainly characterized by 3 main components:
 3. PyTorch Training Loop
 
 Additionally, evaluation, testing, and validation comes after training.
+
+### TODO:
+- finish exploring the playing cards data
+- build classifier model
+- train

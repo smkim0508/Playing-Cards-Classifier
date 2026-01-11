@@ -19,10 +19,10 @@ import tkinter as tk
 
 import os
 
-print(f"Starting Exploration!")
+print(f"Starting Exploration with Playing Cards Dataset!")
 print(f"PyTorch version: {torch.__version__}\nTorchvision version: {torchvision.__version__}\ntimm version: {timm.__version__}\nNumPy version: {np.__version__}\nPandas version: {pd.__version__}")
 
-# Download the latest version of the dataset and cache it locally
+# Download the latest version of the playing cards dataset and cache it locally
 path = kagglehub.dataset_download("gpiosenka/cards-image-datasetclassification")
 print(f"Path to downloaded Kaggle dataset files: {path}")
 
