@@ -13,12 +13,16 @@ import matplotlib.pyplot as plt # data visualization
 import pandas as pd
 import numpy as np
 
+# for image display
+from PIL import Image, ImageTk
+import tkinter as tk
+
 import os
 
 print(f"Starting Exploration!")
 print(f"PyTorch version: {torch.__version__}\nTorchvision version: {torchvision.__version__}\ntimm version: {timm.__version__}\nNumPy version: {np.__version__}\nPandas version: {pd.__version__}")
 
-# Download latest version
+# Download the latest version of the dataset and cache it locally
 path = kagglehub.dataset_download("gpiosenka/cards-image-datasetclassification")
 
 print(f"Path to downloaded Kaggle dataset files: {path}")
@@ -48,3 +52,18 @@ dataset = PlayingCardDataset(
 )
 
 print(f"Length of dataset: {len(dataset)}")
+idx = 535
+print(f"Getting random item from idx {idx}: {dataset[idx]}")
+
+image, label = dataset[idx]
+
+# display the image on a pop up window
+root = tk.Tk()
+root.title(f"Playing Card {idx}")
+tk_image = ImageTk.PhotoImage(image)
+label = tk.Label(root, image=tk_image)
+label.pack()
+root.mainloop()
+
+# print the label for image from dataset
+print(f"Label: {label}")
