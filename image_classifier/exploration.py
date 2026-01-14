@@ -14,7 +14,7 @@ import pandas as pd
 import numpy as np
 
 # dataset class to explore
-from image_classifier.dataset import PlayingCardDataset
+from dataset import PlayingCardDataset
 
 # for image display
 from PIL import Image, ImageTk
@@ -75,6 +75,9 @@ dataset_transformed = PlayingCardDataset(
 image, label = dataset_transformed[idx]
 print(f"Image shape for idx {idx}: {image.shape}, label: {label}")
 
+# test the len() method
+print(f"Length of transformed dataset: {len(dataset_transformed)}")
+
 # also exploring the shape of the image/label tensors
 for image, label in dataset_transformed:
     break # just fetch the first image and label
@@ -86,6 +89,9 @@ dataloader = DataLoader(
     batch_size=32,
     shuffle=True # used for training mostly
 )
+
+# test length of dataloader
+# print(f"Length of dataloader: {len(dataloader.dataset)} vs length of dataset: {len(dataset_transformed)}")
 
 # now compare the shapes of image/label tensors after wrapping it in dataloader
 # NOTE: now, images and labels are batched; labels are also randomized since shuffled, and each of the 32 labels correspond to each image in batch.
