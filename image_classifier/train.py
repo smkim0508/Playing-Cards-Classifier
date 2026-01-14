@@ -19,3 +19,53 @@ from image_classifier.model import CardsClassifier
 from image_classifier.dataset import PlayingCardDataset
 
 # TODO: define training loop
+
+# instantiate the model
+model = CardsClassifier(num_classes=53)
+
+# define loss function
+# NOTE: criterion is the typical name for loss
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+# set up datasets and dataloaders
+transform = transforms.Compose([
+    transforms.Resize([128,128]),
+    transforms.ToTensor()
+    # NOTE: can add any other transforms here
+])
+
+# download the latest version of the playing cards dataset and cache it locally
+path = kagglehub.dataset_download("gpiosenka/cards-image-datasetclassification")
+print(f"Path to downloaded Kaggle dataset files: {path}")
+
+train_path = path + "/train"
+test_path = path + "/test"
+validation_path = path + "/valid"
+
+train_dataset = PlayingCardDataset(data_dir=train_path, transform=transform)
+test_dataset = PlayingCardDataset(data_dir=test_path, transform=transform)
+validation_dataset = PlayingCardDataset(data_dir=validation_path, transform=transform)
+
+train_loader = DataLoader(dataset=train_dataset, batch_size=32, shuffle=True)
+test_loader = DataLoader(dataset=test_dataset, batch_size=32, shuffle=False)
+validation_loader = DataLoader(dataset=validation_dataset, batch_size=32, shuffle=False)
+
+# set up the training loop
+num_epochs = 5 # small training loop for now
+# define empty lists to store loss values
+train_losses = []
+val_losses = []
+
+for epoch in range(num_epochs):
+    model.train() # ensure model is in training mode
+    running_loss = 0.0
+    for images, labels in train_loader:
+        optimizer.zero_grad() # reset gradient
+        outputs = model(images) # forward pass images in batches defined by loader
+        loss = criterion(outputs, labels) # calculate loss
+        loss.backward() # back prop loss, handled by PyTorch internally
+        optimizer.step() # update weights
+        running_loss = loss.item() + images.size(0)
+    train_loss = running_loss / len(train_loader) # train loss for an epoch becomes the average loss
+    train_losses.append(train_loss)
