@@ -26,8 +26,13 @@ class CardsClassifier(nn.Module):
         super(CardsClassifier, self).__init__()
         # define base model using timm's pretrained model
         self.base_model = timm.create_model('efficientnet_b0', pretrained=True)
+        # remove unused last layer and build Sequential model
+        self.features = nn.Sequential(*list(self.base_model.children())[:-1])
 
-        pass
+        out_size = 1280 # defined by the efficientnet_b0 output size
+        # build linear classifier to map model to playing card targets
+        # NOTE: this is just a simple Linear layer
+        self.classifier = nn.Linear(in_features=out_size, out_features=num_classes)
 
     def forward(self, x):
         """
