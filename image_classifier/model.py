@@ -22,7 +22,11 @@ class CardsClassifier(nn.Module):
         Defines components of this model.
         Num classes set to 53 (number of playing cards).
         """
+        # init the parent class
+        super(CardsClassifier, self).__init__()
         # define base model using timm's pretrained model
+        self.base_model = timm.create_model('efficientnet_b0', pretrained=True)
+
         pass
 
     def forward(self, x):
