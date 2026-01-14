@@ -38,4 +38,8 @@ class CardsClassifier(nn.Module):
         """
         Forward pass that connects components of this model
         """
-        pass
+        # pass the input through Sequential model
+        sequential_output = self.features(x)
+        # pass the output of sequential layers into classification layer
+        classification_output = self.classifier(sequential_output)
+        return classification_output
