@@ -33,14 +33,14 @@ Additionally, evaluation, testing, and validation comes after training.
 
 ### Training the Model
 - The key idea is simple, same as any NN training: use loss function to evaluate accuracy and use back propagation to update model weight based on loss as training continues
-- PyTorch's loss function provides .backward() that automatically updates model weights w/ back propagation
+- PyTorch's loss function provides .backward() that automatically finds gradients for all parameters in layers w.r.t. loss.
 - The main training for loop should run for n_epoch times, and each loop exhaust the entire training data in batches using previously defined dataloader
     - Instantiate dataloader for training, test, and validation data
     - There are methods available to split dataset into train, test, validation, typically like 70/20/10, but can use pre-defined dataset (e.g. Playing Cards Dataset used in this practice).
-- Optimizer actually decides the direction of gradient descent based on the loss.
+- Optimizer actually decides the direction of gradient descent based on the loss/gradients and updates parameter weights.
     - PyTorch provides useful optimizers like Adam
     - *Observe how to define my own optimizer, and if PyTorch supports this*
 - Learning rate determines the step size, and tools like learning rate scheduler help adjust LR as training goes on (based on loss threshold or epochs)
 ### TODO:
-- build classifier model
-- train
+- train model
+- validation
