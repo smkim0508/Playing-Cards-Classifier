@@ -13,6 +13,9 @@ import matplotlib.pyplot as plt # data visualization
 import pandas as pd
 import numpy as np
 
+# dataset class to explore
+from image_classifier.dataset import PlayingCardDataset
+
 # for image display
 from PIL import Image, ImageTk
 import tkinter as tk
@@ -25,24 +28,6 @@ print(f"PyTorch version: {torch.__version__}\nTorchvision version: {torchvision.
 # Download the latest version of the playing cards dataset and cache it locally
 path = kagglehub.dataset_download("gpiosenka/cards-image-datasetclassification")
 print(f"Path to downloaded Kaggle dataset files: {path}")
-
-class PlayingCardDataset(Dataset):
-    """
-    Playing Card Dataset class that inherits from PyTorch's base Dataset.
-    Currently attempting to set this up using kaggle dataset.
-    """
-    def __init__(self, data_dir, transform=None):
-        self.data = ImageFolder(root=data_dir, transform=transform)
-
-    def __len__(self):
-        return len(self.data)
-
-    def __getitem__(self, idx):
-        return self.data[idx]
-
-    @property
-    def classes(self):
-        return self.data.classes
 
 train_path = path + "/train"
 test_path = path + "/test"
