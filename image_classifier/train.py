@@ -14,9 +14,9 @@ import pandas as pd
 import numpy as np
 
 # defined model
-from image_classifier.model import CardsClassifier
+from model import CardsClassifier
 # defined dataset class
-from image_classifier.dataset import PlayingCardDataset
+from dataset import PlayingCardDataset
 
 # TODO: define training loop
 
@@ -66,6 +66,21 @@ for epoch in range(num_epochs):
         loss = criterion(outputs, labels) # calculate loss
         loss.backward() # back prop loss, handled by PyTorch internally
         optimizer.step() # update weights
-        running_loss = loss.item() + images.size(0)
-    train_loss = running_loss / len(train_loader) # train loss for an epoch becomes the average loss
+        running_loss = loss.item() * images.size(0) # normalize by multiplying by num of images per batch and later dividing by total num of images
+    train_loss = running_loss / len(train_dataset) # train loss for an epoch becomes the average loss
     train_losses.append(train_loss)
+
+    # validation
+    model.eval() # ensure model is in validation mode
+    running_loss = 0.0
+    # ensure model weights aren't updated during this phase
+    with torch.no_grad():
+        for images, labels in validation_loader:
+            outputs = model(images)
+            loss = criterion(outputs, labels)
+            running_loss = loss.item() * images.size(0)
+        val_loss = running_loss / len(validation_dataset)
+        val_losses.append(val_loss)
+
+    # print loss every epoch for monitoring
+    print(f"Epoch [{epoch+1}/{num_epochs}], Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
