@@ -47,6 +47,12 @@ Additionally, evaluation, testing, and validation comes after training.
 - Loss is tracked in a simple list typically.
 - Tracking the training progress: for this, tqdm library can be used to show a live progress bar.
     - Simply wrap the data loaders w/ adequate descriptions.
+- Save checkpoints of trained model using torch.save()
+
+### Evaluating the Model
+- Load in saved versions of the model (or use the trained instances if on Colab/Jutyper Notebook)
+- Pass images through the trained model, and convert raw classification output to desired format
+    - e.g. probabilities corresponding to each target class using softmax() or take the highest confidence result with argmax()
+
 ### TODO:
-- train model
-- validation
+- build transformer
