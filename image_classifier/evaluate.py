@@ -82,8 +82,10 @@ if __name__ == "__main__":
     # build dataset
     test_dataset = PlayingCardDataset(data_dir=test_path, transform=transform)
 
-    # instantiate the model
+    # load in the model from previously saved checkpoint
+    checkpoint_dir = "image_classifier/checkpoints/model_2.pth"
     model = CardsClassifier(num_classes=53)
+    model.load_state_dict(torch.load(checkpoint_dir))
 
     # use GPU if available
     cuda_available = torch.cuda.is_available()
