@@ -13,12 +13,14 @@ import matplotlib.pyplot as plt # data visualization
 import pandas as pd
 import numpy as np
 
+# training progress track
+# NOTE: import from tqdm.notebook for Colab/Jupyter
+from tqdm import tqdm
+
 # defined model
 from model import CardsClassifier
 # defined dataset class
 from dataset import PlayingCardDataset
-
-# TODO: define training loop
 
 # instantiate the model
 model = CardsClassifier(num_classes=53)
@@ -67,7 +69,7 @@ val_losses = []
 for epoch in range(num_epochs):
     model.train() # ensure model is in training mode
     running_loss = 0.0
-    for images, labels in train_loader:
+    for images, labels in tqdm(train_loader, desc="Training Loop"):
         if cuda_available:
             images, labels = images.to(device), labels.to(device) # forward images and labels to GPU, if available because tensors must match device
         optimizer.zero_grad() # reset gradient
@@ -84,7 +86,7 @@ for epoch in range(num_epochs):
     running_loss = 0.0
     # ensure model weights aren't updated during this phase
     with torch.no_grad():
-        for images, labels in validation_loader:
+        for images, labels in tqdm(validation_loader, desc="Validation Loop"):
             outputs = model(images)
             loss = criterion(outputs, labels)
             running_loss = loss.item() * images.size(0)
