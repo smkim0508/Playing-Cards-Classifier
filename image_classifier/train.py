@@ -51,6 +51,13 @@ train_loader = DataLoader(dataset=train_dataset, batch_size=32, shuffle=True)
 test_loader = DataLoader(dataset=test_dataset, batch_size=32, shuffle=False)
 validation_loader = DataLoader(dataset=validation_dataset, batch_size=32, shuffle=False)
 
+# use GPU if available
+cuda_available = torch.cuda.is_available()
+device = torch.device("cuda:0" if cuda_available else "cpu")
+print(f"Using device: {device}")
+if cuda_available:
+    model.to(device) # forward model to GPU if available
+
 # set up the training loop
 num_epochs = 5 # small training loop for now
 # define empty lists to store loss values
@@ -61,6 +68,8 @@ for epoch in range(num_epochs):
     model.train() # ensure model is in training mode
     running_loss = 0.0
     for images, labels in train_loader:
+        if cuda_available:
+            images, labels = images.to(device), labels.to(device) # forward images and labels to GPU, if available because tensors must match device
         optimizer.zero_grad() # reset gradient
         outputs = model(images) # forward pass images in batches defined by loader
         loss = criterion(outputs, labels) # calculate loss
