@@ -79,7 +79,6 @@ for epoch in range(num_epochs):
         optimizer.step() # update weights
         running_loss = loss.item() * images.size(0) # normalize by multiplying by num of images per batch and later dividing by total num of images
 
-        break # just do 1 batch for now
     train_loss = running_loss / len(train_dataset) # train loss for an epoch becomes the average loss
     train_losses.append(train_loss)
 
@@ -100,3 +99,15 @@ for epoch in range(num_epochs):
 
     # print loss every epoch for monitoring
     print(f"Epoch [{epoch+1}/{num_epochs}], Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
+
+print(f"Training complete after {num_epochs} epochs!")
+
+# plot loss over epochs for visualization
+plt.plot(train_losses, label="Train Loss")
+plt.plot(val_losses, label="Val Loss")
+plt.xlabel("Epochs")
+plt.ylabel("Loss")
+plt.title("Loss Over Epochs")
+plt.legend()
+plt.show()
+plt.savefig("image_classifier/graphs/loss.png") # saves the loss graph as png, NOTE: overrieds previous training loss graph
