@@ -46,6 +46,7 @@ def predict(model, image_tensor, device):
     with torch.no_grad():
         image_tensor = image_tensor.to(device)
         outputs = model(image_tensor)
+        # takes raw outputs and redistributes to probabilities using softmax
         probabilities = torch.nn.functional.softmax(outputs, dim=1)
     return probabilities.cpu().numpy().flatten()
 
