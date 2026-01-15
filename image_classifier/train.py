@@ -78,8 +78,13 @@ for epoch in range(num_epochs):
         loss.backward() # back prop loss, handled by PyTorch internally
         optimizer.step() # update weights
         running_loss = loss.item() * images.size(0) # normalize by multiplying by num of images per batch and later dividing by total num of images
+
+        break # just do 1 batch for now
     train_loss = running_loss / len(train_dataset) # train loss for an epoch becomes the average loss
     train_losses.append(train_loss)
+
+    # save the model after each epoch
+    torch.save(model.state_dict(), f"image_classifier/checkpoints/model_{epoch + 1}.pth")
 
     # validation
     model.eval() # ensure model is in validation mode
