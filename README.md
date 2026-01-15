@@ -16,6 +16,7 @@ Additionally, evaluation, testing, and validation comes after training.
 - By creating the dataset using Torch's Dataset base class and wrapping it with DataLoader, we can utilize PyTorch to automatically load in data in parallel
 - Dataset is an iterable type
 - Dataloader also helps to batch the samples and enable shuffling
+    - Batch size should be a power of 2.
 
 ### PyTorch Models
 - Can be created layer-by-layer from scratch, or import SOTA models and modify
@@ -34,6 +35,7 @@ Additionally, evaluation, testing, and validation comes after training.
 ### Training the Model
 - The key idea is simple, same as any NN training: use loss function to evaluate accuracy and use back propagation to update model weight based on loss as training continues
 - PyTorch's loss function provides .backward() that automatically finds gradients for all parameters in layers w.r.t. loss.
+    - Loss is defined but never explicitly given information about the model parameters; PyTorch internally computes gradients w.r.t. to each parameters.
 - The main training for loop should run for n_epoch times, and each loop exhaust the entire training data in batches using previously defined dataloader
     - Instantiate dataloader for training, test, and validation data
     - There are methods available to split dataset into train, test, validation, typically like 70/20/10, but can use pre-defined dataset (e.g. Playing Cards Dataset used in this practice).
@@ -41,6 +43,10 @@ Additionally, evaluation, testing, and validation comes after training.
     - PyTorch provides useful optimizers like Adam
     - *Observe how to define my own optimizer, and if PyTorch supports this*
 - Learning rate determines the step size, and tools like learning rate scheduler help adjust LR as training goes on (based on loss threshold or epochs)
+- PyTorch's nn.Module base class offers parameters() that returns list of params of the built model (automatically scans)
+- Loss is tracked in a simple list typically.
+- Tracking the training progress: for this, tqdm library can be used to show a live progress bar.
+    - Simply wrap the data loaders w/ adequate descriptions.
 ### TODO:
 - train model
 - validation
