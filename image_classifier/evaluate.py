@@ -27,6 +27,9 @@ from dataset import PlayingCardDataset
 # image related imports
 from PIL import Image
 
+# use glob to retrieve image paths
+from glob import glob
+
 def preprocess_image(image_path, transform):
     """
     Load and preprocess image, returns tuple of image and tensor.
@@ -72,7 +75,7 @@ if __name__ == "__main__":
     path = kagglehub.dataset_download("gpiosenka/cards-image-datasetclassification")
     print(f"Path to downloaded Kaggle dataset files: {path}")
     test_path = path + "/test"
-    test_image = test_path + "/queen of hearts/1.jpg"
+    # test_image = test_path + "/queen of hearts/1.jpg" # NOTE: this can be used to test a single image
 
     transform = transforms.Compose([
         transforms.Resize([128,128]),
@@ -83,7 +86,7 @@ if __name__ == "__main__":
     test_dataset = PlayingCardDataset(data_dir=test_path, transform=transform)
 
     # load in the model from previously saved checkpoint
-    checkpoint_dir = "image_classifier/checkpoints/model_2.pth"
+    checkpoint_dir = "image_classifier/checkpoints/model_2.pth" # NOTE: the path can be changed to swap checkpoints
     model = CardsClassifier(num_classes=53)
     model.load_state_dict(torch.load(checkpoint_dir))
 
@@ -94,7 +97,14 @@ if __name__ == "__main__":
     if cuda_available:
         model.to(device) # forward model to GPU if available
 
-    original_image, image_tensor = preprocess_image(test_image, transform)
-    probabilities = predict(model, image_tensor, device)
+    # get all images using glob helper, then randomly sample 5
+    test_images = glob(test_path + "/*/*")
+    chosen_images = np.random.choice(test_images, 5)
 
-    visualize_predictions(original_image, probabilities, test_dataset.classes)
+    # NOTE: this loop visualizes predictions for 5 random images, but they are shown one at a time.
+    for image in chosen_images:
+        # process image and make prediction
+        original_image, image_tensor = preprocess_image(image, transform)
+        probabilities = predict(model, image_tensor, device)
+        # visualize
+        visualize_predictions(original_image, probabilities, test_dataset.classes)
