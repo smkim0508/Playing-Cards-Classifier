@@ -98,7 +98,7 @@ for epoch in range(num_epochs):
         val_losses.append(val_loss)
 
     # print loss every epoch for monitoring
-    print(f"Epoch [{epoch+1}/{num_epochs}], Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
+    print(f"Epoch [{epoch+1}/{num_epochs}] Complete, Train Loss: {train_loss:.4f}, Val Loss: {val_loss:.4f}")
 
 print(f"Training complete after {num_epochs} epochs!")
 
