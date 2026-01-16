@@ -1,1 +1,0 @@
-# this is where checkpoints of trained models should be saved, using torch.save()
