@@ -11,10 +11,14 @@ Refining my PyTorch skills to build models from scratch - Playing Cards Image Cl
 ## Evaluation Snapshots
 The example evaluation snapshots in this section was taken from executing `evaluate.py`.
 
-![seven-of-clubs](static/seven_of_clubs.png)
+<!-- ![seven-of-clubs](static/seven_of_clubs.png) -->
+<img src="static/seven_of_clubs.png" alt="seven-of-clubs" width="300" height="200">
+
 1. Correct Prediction for Seven of Clubs image.
 
-![ten-of-diamonds](static/ten_of_diamonds.png)
+<!-- ![ten-of-diamonds](static/ten_of_diamonds.png) -->
+<img src="static/ten_of_diamonds.png" alt="ten-of-diamonds" width="300" height="200">
+
 2. Correct Prediction for Ten of Diamonds image.
 
 ## NOTES
