@@ -2,6 +2,15 @@
 Refining my PyTorch skills to build models from scratch - Playing Cards Image Classifier using EfficientNet as base.
 *This README will also contain my personal notes as I review key concepts and practice with examples.*
 
+## How to Run
+1. Download the dataset using the Kaggle API (see below for link)
+2. To train your own model, modify model architecture in `model.py` (optional) and run the training loop in `train.py` with any implementation detail modifications.
+3. Alternatively, use the pre-trained EfficientNet model under `checkpoints/`.
+4. Test the outputs using randomized test images with the help of `evaluation.py`.
+
+## Evaluation
+TODO
+
 ## NOTES
 ### Fundamentals
 PyTorch usage can be mainly characterized by 3 main components:
@@ -56,3 +65,5 @@ Additionally, evaluation, testing, and validation comes after training.
 ## Acknowledgements
 The Playing Cards Dataset from Kaggle is used to train this image classifier: https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data.
 - This data is downloaded using the Kaggle API, please see example in `exploration.py` for further reference.
+
+Following Rob Mulla's guide on [YouTube](!https://www.youtube.com/watch?v=tHL5STNJKag) and modified for self-learning.
