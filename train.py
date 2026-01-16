@@ -83,7 +83,7 @@ for epoch in range(num_epochs):
     train_losses.append(train_loss)
 
     # save the model after each epoch
-    torch.save(model.state_dict(), f"image_classifier/checkpoints/model_{epoch + 1}.pth")
+    torch.save(model.state_dict(), f"checkpoints/model_{epoch + 1}.pth")
 
     # validation
     model.eval() # ensure model is in validation mode
@@ -110,4 +110,4 @@ plt.ylabel("Loss")
 plt.title("Loss Over Epochs")
 plt.legend()
 plt.show()
-plt.savefig("image_classifier/graphs/loss.png") # saves the loss graph as png, NOTE: overrieds previous training loss graph
+plt.savefig("graphs/loss.png") # saves the loss graph as png, NOTE: overrieds previous training loss graph

@@ -87,7 +87,7 @@ if __name__ == "__main__":
     test_dataset = PlayingCardDataset(data_dir=test_path, transform=transform)
 
     # load in the model from previously saved checkpoint
-    checkpoint_dir = "image_classifier/checkpoints/model_2.pth" # NOTE: the path can be changed to swap checkpoints
+    checkpoint_dir = "checkpoints/model_2.pth" # NOTE: the path can be changed to swap checkpoints
     model = CardsClassifier(num_classes=53)
     model.load_state_dict(torch.load(checkpoint_dir))
 

@@ -16,7 +16,6 @@ import numpy as np
 class PlayingCardDataset(Dataset):
     """
     Playing Card Dataset class that inherits from PyTorch's base Dataset.
-    Currently attempting to set this up using kaggle dataset.
     """
     def __init__(self, data_dir, transform=None):
         self.data = ImageFolder(root=data_dir, transform=transform)
