@@ -1,9 +1,8 @@
-# PyTorch-Practice
-Refining my PyTorch skills to build models from scratch
+# Playing-Cards-Classifier
+Refining my PyTorch skills to build models from scratch - Playing Cards Image Classifier using EfficientNet as base.
+*This README will also contain my personal notes as I review key concepts and practice with examples.*
 
-Various projects exploring different model architectures.
-This README will also contain my personal notes as I review key concepts and practice with examples.
-
+## NOTES
 ### Fundamentals
 PyTorch usage can be mainly characterized by 3 main components:
 1. PyTorch Dataset
@@ -54,5 +53,6 @@ Additionally, evaluation, testing, and validation comes after training.
 - Pass images through the trained model, and convert raw classification output to desired format
     - e.g. probabilities corresponding to each target class using softmax() or take the highest confidence result with argmax()
 
-### TODO:
-- build transformer
+## Acknowledgements
+The Playing Cards Dataset from Kaggle is used to train this image classifier: https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data.
+- This data is downloaded using the Kaggle API, please see example in `exploration.py` for further reference.
