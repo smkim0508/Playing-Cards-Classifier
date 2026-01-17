@@ -99,12 +99,33 @@ if __name__ == "__main__":
 
     # get all images using glob helper
     test_images = glob(test_path + "/*/*")
+
+    # check the base model (untrained) performance first
+    model = CardsClassifier(num_classes=53)
+    # forward model to GPU if available
+    if cuda_available:
+        model.to(device)
+    
+    # first find overall accuracy on test images
+    total_correct = 0
+    for image in tqdm(test_images, desc="Testing Accuracy"):
+        # process image and make prediction
+        original_image, image_tensor = preprocess_image(image, transform)
+        probabilities = predict(model, image_tensor, device)
+        # get the best prediction
+        best_prediction = get_best_prediction(probabilities)
+        # get the true class
+        true_class = image.split("/")[-2]
+        # accumulate accuracy
+        if true_class == test_dataset.classes[best_prediction]:
+            total_correct += 1
+    # print out result
+    print(f"Accuracy on test images for untrained model: {total_correct / len(test_images)}")
     
     # loop through different checkpoint models
     for checkpoint in range(1, 6):
         # load in the model from previously saved checkpoint
         checkpoint_dir = f"checkpoints/model_{checkpoint}.pth"
-        model = CardsClassifier(num_classes=53)
         model.load_state_dict(torch.load(checkpoint_dir))
 
         # forward model to GPU if available
@@ -125,7 +146,7 @@ if __name__ == "__main__":
             if true_class == test_dataset.classes[best_prediction]:
                 total_correct += 1
         # print out result
-        print(f"Accuracy on test images: {total_correct / len(test_images)}")
+        print(f"Accuracy on test images for model {checkpoint}: {total_correct / len(test_images)}")
 
     # NOTE: this loop visualizes predictions for 5 random images, but they are shown one at a time.
     # should use the last instantiated model from above loop
