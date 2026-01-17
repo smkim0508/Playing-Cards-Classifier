@@ -92,39 +92,44 @@ if __name__ == "__main__":
     # build dataset
     test_dataset = PlayingCardDataset(data_dir=test_path, transform=transform)
 
-    # load in the model from previously saved checkpoint
-    checkpoint_dir = "checkpoints/model_5.pth" # NOTE: the path can be changed to swap checkpoints
-    model = CardsClassifier(num_classes=53)
-    model.load_state_dict(torch.load(checkpoint_dir))
-
     # use GPU if available
     cuda_available = torch.cuda.is_available()
     device = torch.device("cuda:0" if cuda_available else "cpu")
     print(f"Using device: {device}")
-    if cuda_available:
-        model.to(device) # forward model to GPU if available
 
-    # get all images using glob helper, then randomly sample 5
+    # get all images using glob helper
     test_images = glob(test_path + "/*/*")
-    chosen_images = np.random.choice(test_images, 5)
+    
+    # loop through different checkpoint models
+    for checkpoint in range(1, 6):
+        # load in the model from previously saved checkpoint
+        checkpoint_dir = f"checkpoints/model_{checkpoint}.pth"
+        model = CardsClassifier(num_classes=53)
+        model.load_state_dict(torch.load(checkpoint_dir))
 
-    # first find overall accuracy on test images
-    total_correct = 0
-    for image in tqdm(test_images, desc="Testing Accuracy"):
-        # process image and make prediction
-        original_image, image_tensor = preprocess_image(image, transform)
-        probabilities = predict(model, image_tensor, device)
-        # get the best prediction
-        best_prediction = get_best_prediction(probabilities)
-        # get the true class
-        true_class = image.split("/")[-2]
-        # accumulate accuracy
-        if true_class == test_dataset.classes[best_prediction]:
-            total_correct += 1
-    # print out result
-    print(f"Accuracy on test images: {total_correct / len(test_images)}")
+        # forward model to GPU if available
+        if cuda_available:
+            model.to(device)
+
+        # first find overall accuracy on test images
+        total_correct = 0
+        for image in tqdm(test_images, desc="Testing Accuracy"):
+            # process image and make prediction
+            original_image, image_tensor = preprocess_image(image, transform)
+            probabilities = predict(model, image_tensor, device)
+            # get the best prediction
+            best_prediction = get_best_prediction(probabilities)
+            # get the true class
+            true_class = image.split("/")[-2]
+            # accumulate accuracy
+            if true_class == test_dataset.classes[best_prediction]:
+                total_correct += 1
+        # print out result
+        print(f"Accuracy on test images: {total_correct / len(test_images)}")
 
     # NOTE: this loop visualizes predictions for 5 random images, but they are shown one at a time.
+    # should use the last instantiated model from above loop
+    chosen_images = np.random.choice(test_images, 5) # randomly choose 5 images
     for image in chosen_images:
         # process image and make prediction
         original_image, image_tensor = preprocess_image(image, transform)
