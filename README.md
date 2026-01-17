@@ -8,8 +8,19 @@ Refining my PyTorch skills to build models from scratch - Playing Cards Image Cl
 3. Alternatively, use the pre-trained EfficientNet model under `checkpoints/`.
 4. Test the outputs using randomized test images with the help of `evaluation.py`.
 
-## Evaluation Snapshots
-The example evaluation snapshots in this section was taken from executing `evaluate.py`.
+## Evaluation Results
+### Accuracy
+| Checkpoint | Accuracy |
+| -------- | ------- |
+| Untrained| 0.75%   |
+| 1 Epoch  | 87.55%  |
+| 2 Epochs | 90.57%  |
+| 3 Epochs | 92.83%  |
+| 4 Epochs | 94.72%  |
+| 5 Epochs | 93.96%  |
+
+### Snapshots
+The example evaluation snapshots in this section was taken from executing 5 random sample images in `evalute.py` with model after 5 epochs of training.
 
 <!-- ![seven-of-clubs](static/seven_of_clubs.png) -->
 <img src="static/seven_of_clubs.png" alt="seven-of-clubs" width="300" height="200">
