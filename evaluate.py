@@ -50,6 +50,12 @@ def predict(model, image_tensor, device):
         probabilities = torch.nn.functional.softmax(outputs, dim=1)
     return probabilities.cpu().numpy().flatten()
 
+def get_best_prediction(probabilities):
+    """
+    Get the class with the highest probability.
+    """
+    return np.argmax(probabilities)
+
 def visualize_predictions(original_image, probabilities, class_names):
     """
     Intuitive visualization of predictions.
@@ -87,7 +93,7 @@ if __name__ == "__main__":
     test_dataset = PlayingCardDataset(data_dir=test_path, transform=transform)
 
     # load in the model from previously saved checkpoint
-    checkpoint_dir = "checkpoints/model_2.pth" # NOTE: the path can be changed to swap checkpoints
+    checkpoint_dir = "checkpoints/model_5.pth" # NOTE: the path can be changed to swap checkpoints
     model = CardsClassifier(num_classes=53)
     model.load_state_dict(torch.load(checkpoint_dir))
 
@@ -102,6 +108,22 @@ if __name__ == "__main__":
     test_images = glob(test_path + "/*/*")
     chosen_images = np.random.choice(test_images, 5)
 
+    # first find overall accuracy on test images
+    total_correct = 0
+    for image in tqdm(test_images, desc="Testing Accuracy"):
+        # process image and make prediction
+        original_image, image_tensor = preprocess_image(image, transform)
+        probabilities = predict(model, image_tensor, device)
+        # get the best prediction
+        best_prediction = get_best_prediction(probabilities)
+        # get the true class
+        true_class = image.split("/")[-2]
+        # accumulate accuracy
+        if true_class == test_dataset.classes[best_prediction]:
+            total_correct += 1
+    # print out result
+    print(f"Accuracy on test images: {total_correct / len(test_images)}")
+
     # NOTE: this loop visualizes predictions for 5 random images, but they are shown one at a time.
     for image in chosen_images:
         # process image and make prediction
@@ -109,3 +131,6 @@ if __name__ == "__main__":
         probabilities = predict(model, image_tensor, device)
         # visualize
         visualize_predictions(original_image, probabilities, test_dataset.classes)
+
+# TODO: find accuracy on test data
+# Next, try to improve w/ additional layers or rate limit scheduling
