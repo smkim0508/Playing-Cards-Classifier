@@ -84,7 +84,7 @@ Additionally, evaluation, testing, and validation comes after training.
     - e.g. probabilities corresponding to each target class using softmax() or take the highest confidence result with argmax()
 
 ## Acknowledgements
-The Playing Cards Dataset from Kaggle is used to train this image classifier: https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data.
+The [Playing Cards Dataset](https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data) from Kaggle is used to train this image classifier.
 - This data is downloaded using the Kaggle API, please see example in `exploration.py` for further reference.
 
-Following Rob Mulla's guide on [YouTube](!https://www.youtube.com/watch?v=tHL5STNJKag) and modified for self-learning.
+Followed Rob Mulla's guide on [YouTube](https://www.youtube.com/watch?v=tHL5STNJKag) and modified for self-learning purposes.
