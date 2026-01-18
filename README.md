@@ -19,6 +19,7 @@ Refining my PyTorch skills to build models from scratch - Playing Cards Image Cl
 | 3 Epochs | 92.83%  |
 | 4 Epochs | 94.72%  |
 | 5 Epochs | 93.96%  |
+- It appears evident that the accuracy increases after each epoch of training, until the 5th epoch where there is a slight decrease in accuracy. This is likely attributed to the model **overfitting** to training data.
 
 ### Snapshots
 The example evaluation snapshots in this section was taken from executing 5 random sample images in `evalute.py` with model after 5 epochs of training.
