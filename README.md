@@ -1,6 +1,7 @@
 # Playing-Cards-Classifier
 Refining my PyTorch skills to build models from scratch - Playing Cards Image Classifier using EfficientNet as base.
 *This README will also contain my personal notes as I review key concepts and practice with examples.*
+- This project is also to be used as custom tutoring material in the future
 
 ## How to Run
 1. Download the dataset using the Kaggle API (see below for link)
@@ -70,7 +71,7 @@ Additionally, evaluation, testing, and validation comes after training.
     - There are methods available to split dataset into train, test, validation, typically like 70/20/10, but can use pre-defined dataset (e.g. Playing Cards Dataset used in this practice).
 - Optimizer actually decides the direction of gradient descent based on the loss/gradients and updates parameter weights.
     - PyTorch provides useful optimizers like Adam
-    - *Observe how to define my own optimizer, and if PyTorch supports this*
+    - PyTorch supports defining custom optimizers but not recommended unless there's a very specific need or research architecture to implement.
 - Learning rate determines the step size, and tools like learning rate scheduler help adjust LR as training goes on (based on loss threshold or epochs)
 - PyTorch's nn.Module base class offers parameters() that returns list of params of the built model (automatically scans)
 - Loss is tracked in a simple list typically.
