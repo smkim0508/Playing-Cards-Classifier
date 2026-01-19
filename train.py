@@ -109,5 +109,5 @@ plt.xlabel("Epochs")
 plt.ylabel("Loss")
 plt.title("Loss Over Epochs")
 plt.legend()
-plt.show()
 plt.savefig("graphs/loss.png") # saves the loss graph as png, NOTE: overrieds previous training loss graph
+plt.show()

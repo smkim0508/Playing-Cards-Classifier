@@ -34,6 +34,11 @@ The example evaluation snapshots in this section was taken from executing 5 rand
 
 2. Correct Prediction for Ten of Diamonds image.
 
+### Loss Over Epochs
+<img src="graphs/loss.png" alt="loss-graph" width="300" height="200">
+
+The graph above shows the training and validation losses over training across 5 epochs (indexed 0 to 4).
+
 ## NOTES
 ### Fundamentals
 PyTorch usage can be mainly characterized by 3 main components:
